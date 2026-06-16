@@ -4,7 +4,7 @@ import { DashboardLayout } from '../components/layout/DashboardLayout';
 import { StatCard } from '../components/shared/StatCard';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { membersService, transactionsService } from '../services/api';
-import { Member, Transaction } from '../types';
+
 import {
   TrendingUp,
   Award,
@@ -17,10 +17,10 @@ import {
   Calendar
 } from 'lucide-react';
 
-export const DashboardPage: React.FC = () => {
+export const DashboardPage = () => {
   const navigate = useNavigate();
-  const [members, setMembers] = useState<Member[]>([]);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [members, setMembers] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [totalCapital, setTotalCapital] = useState(0);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const DashboardPage: React.FC = () => {
   }, []);
 
   // Format currency helpers
-  const formatKsh = (num: number) => {
+  const formatKsh = (num) => {
     return `Ksh ${num.toLocaleString('en-US')}`;
   };
 

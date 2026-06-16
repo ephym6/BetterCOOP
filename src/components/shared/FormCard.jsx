@@ -1,13 +1,6 @@
 import React from 'react';
 
-interface FormCardProps {
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-  footerActions?: React.ReactNode;
-}
-
-export const FormCard: React.FC<FormCardProps> = ({
+export const FormCard = ({
   title,
   description,
   children,

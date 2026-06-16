@@ -1,20 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 
-interface StatCardProps {
-  title: string;
-  value: string;
-  trend?: {
-    value: string;
-    direction: 'up' | 'down' | 'stable';
-    subtext?: string;
-  };
-  icon: React.ReactNode;
-  iconBgColor?: string;
-  iconTextColor?: string;
-}
-
-export const StatCard: React.FC<StatCardProps> = ({
+export const StatCard = ({
   title,
   value,
   trend,

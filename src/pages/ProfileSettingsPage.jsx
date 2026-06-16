@@ -4,11 +4,10 @@ import { FormCard } from '../components/shared/FormCard';
 import { InputField } from '../components/ui/InputField';
 import { Button } from '../components/ui/Button';
 import { usersService } from '../services/api';
-import { User } from '../types';
 import { KeyRound, ShieldAlert, Sparkles, Check } from 'lucide-react';
 
-export const ProfileSettingsPage: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
+export const ProfileSettingsPage = () => {
+  const [user, setUser] = useState(null);
   
   // Form states mapping directly to Mongoose schema values
   const [fullName, setFullName] = useState('');
@@ -35,7 +34,7 @@ export const ProfileSettingsPage: React.FC = () => {
     });
   }, []);
 
-  const handleUpdateDetails = async (e: React.FormEvent) => {
+  const handleUpdateDetails = async (e) => {
     e.preventDefault();
     setNotifMsg('');
 
@@ -53,7 +52,7 @@ export const ProfileSettingsPage: React.FC = () => {
     }
   };
 
-  const handleUpdatePassword = (e: React.FormEvent) => {
+  const handleUpdatePassword = (e) => {
     e.preventDefault();
     if (!currentPassword || !newPassword) {
       alert('Please fill out password credentials.');
@@ -71,7 +70,7 @@ export const ProfileSettingsPage: React.FC = () => {
     setConfirmPassword('');
   };
 
-  const selectPresetAvatar = (url: string) => {
+  const selectPresetAvatar = (url) => {
     setAvatarUrl(url);
   };
 

@@ -323,7 +323,7 @@ function readDb() {
 }
 
 // Helper to write database
-function writeDb(data: any) {
+function writeDb(data) {
   try {
     fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), "utf-8");
   } catch (err) {
@@ -345,7 +345,7 @@ app.get("/api/members", (req, res) => {
 app.get("/api/members/:id", (req, res) => {
   const db = readDb();
   const { id } = req.params;
-  const found = db.members.find((m: any) => m._id === id || m.memberId === id);
+  const found = db.members.find((m) => m._id === id || m.memberId === id);
   if (found) {
     res.json(found);
   } else {
@@ -396,7 +396,7 @@ app.put("/api/members/:id", (req, res) => {
   const { id } = req.params;
   const updates = req.body;
 
-  const idx = db.members.findIndex((m: any) => m._id === id || m.memberId === id);
+  const idx = db.members.findIndex((m) => m._id === id || m.memberId === id);
   if (idx === -1) {
     return res.status(404).json({ error: "Member not found" });
   }
@@ -448,7 +448,7 @@ app.put("/api/users/me", (req, res) => {
   db.currentUser = updated;
 
   // Sync users list
-  const idx = db.users.findIndex((u: any) => u._id === db.currentUser._id);
+  const idx = db.users.findIndex((u) => u._id === db.currentUser._id);
   if (idx !== -1) {
     db.users[idx] = { ...db.users[idx], ...updates };
   }
@@ -461,7 +461,7 @@ app.put("/api/users/me", (req, res) => {
 app.post("/api/users/login", (req, res) => {
   const db = readDb();
   const { email } = req.body;
-  const user = db.users.find((u: any) => u.email === email);
+  const user = db.users.find((u) => u.email === email);
   if (user) {
     db.currentUser = user;
     writeDb(db);

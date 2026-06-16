@@ -1,13 +1,6 @@
 import React from 'react';
 
-interface InputFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string;
-  error?: string;
-  icon?: React.ReactNode;
-  hint?: string;
-}
-
-export const InputField: React.FC<InputFieldProps> = ({
+export const InputField = ({
   label,
   error,
   icon,

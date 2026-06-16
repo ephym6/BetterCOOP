@@ -6,20 +6,18 @@
  * file-based database for durable session persistence.
  */
 
-import { Member, User, Transaction, SystemSettings } from '../types';
-
 // Helper for standard JSON headers
 const getHeaders = () => ({
   'Content-Type': 'application/json',
 });
 
 // Helper response handler
-async function handleResponse<T>(response: Response): Promise<T> {
+async function handleResponse(response) {
   if (!response.ok) {
     const errText = await response.text();
     throw new Error(errText || `API error: ${response.status}`);
   }
-  return response.json() as Promise<T>;
+  return response.json();
 }
 
 export const membersService = {
@@ -27,19 +25,19 @@ export const membersService = {
    * GET /api/members
    * Returns list of cooperative members.
    */
-  async getMembers(): Promise<Member[]> {
+  async getMembers() {
     const res = await fetch('/api/members');
-    return handleResponse<Member[]>(res);
+    return handleResponse(res);
   },
 
   /**
    * GET /api/members/:id
    * Returns a specific member.
    */
-  async getMemberById(id: string): Promise<Member | null> {
+  async getMemberById(id) {
     try {
       const res = await fetch(`/api/members/${id}`);
-      return await handleResponse<Member>(res);
+      return await handleResponse(res);
     } catch {
       return null;
     }
@@ -49,26 +47,26 @@ export const membersService = {
    * POST /api/members
    * Onboards a brand new agricultural member and generates a unique ID.
    */
-  async createMember(memberData: Omit<Member, '_id' | 'memberId' | 'joinedDate'>): Promise<Member> {
+  async createMember(memberData) {
     const res = await fetch('/api/members', {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(memberData),
     });
-    return handleResponse<Member>(res);
+    return handleResponse(res);
   },
 
   /**
    * PUT /api/members/:id
    * Updates coordinates or operational crop types for an existing farmer.
    */
-  async updateMember(id: string, updates: Partial<Member>): Promise<Member> {
+  async updateMember(id, updates) {
     const res = await fetch(`/api/members/${id}`, {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify(updates),
     });
-    return handleResponse<Member>(res);
+    return handleResponse(res);
   }
 };
 
@@ -77,29 +75,29 @@ export const usersService = {
    * GET /api/users
    * Returns system users/administrators.
    */
-  async getUsers(): Promise<User[]> {
+  async getUsers() {
     const res = await fetch('/api/users');
-    return handleResponse<User[]>(res);
+    return handleResponse(res);
   },
 
   /**
    * POST /api/users
    * Invites or registers a system administrator/staff member.
    */
-  async createUser(userData: Omit<User, '_id'>): Promise<User> {
+  async createUser(userData) {
     const res = await fetch('/api/users', {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(userData),
     });
-    return handleResponse<User>(res);
+    return handleResponse(res);
   },
 
   /**
    * GET /api/users/me
    * Fetches active session user profile.
    */
-  async getCurrentUser(): Promise<User | null> {
+  async getCurrentUser() {
     try {
       // First try to load backend active session
       const res = await fetch('/api/users/me');
@@ -123,13 +121,13 @@ export const usersService = {
    * PUT /api/users/me
    * Allows the administrator to update their email and display avatar.
    */
-  async updateCurrentUser(updates: Partial<User>): Promise<User> {
+  async updateCurrentUser(updates) {
     const res = await fetch('/api/users/me', {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify(updates),
     });
-    const updated = await handleResponse<User>(res);
+    const updated = await handleResponse(res);
     localStorage.setItem('bettercoop_current_user', JSON.stringify(updated));
     return updated;
   },
@@ -138,13 +136,13 @@ export const usersService = {
    * POST /api/users/login
    * Authenticates/sets active session user in the backend.
    */
-  async loginUser(email: string): Promise<User> {
+  async loginUser(email) {
     const res = await fetch('/api/users/login', {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify({ email }),
     });
-    const user = await handleResponse<User>(res);
+    const user = await handleResponse(res);
     localStorage.setItem('bettercoop_current_user', JSON.stringify(user));
     return user;
   }
@@ -155,22 +153,22 @@ export const transactionsService = {
    * GET /api/transactions
    * Retrieves full transaction logs.
    */
-  async getTransactions(): Promise<Transaction[]> {
+  async getTransactions() {
     const res = await fetch('/api/transactions');
-    return handleResponse<Transaction[]>(res);
+    return handleResponse(res);
   },
 
   /**
    * POST /api/transactions
    * Logs a new financial or delivery record.
    */
-  async createTransaction(txData: Omit<Transaction, '_id' | 'date'>): Promise<Transaction> {
+  async createTransaction(txData) {
     const res = await fetch('/api/transactions', {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(txData),
     });
-    return handleResponse<Transaction>(res);
+    return handleResponse(res);
   }
 };
 
@@ -179,21 +177,21 @@ export const settingsService = {
    * GET /api/settings
    * Returns global system preferences, minimum share rules, and interest rates.
    */
-  async getSettings(): Promise<SystemSettings> {
+  async getSettings() {
     const res = await fetch('/api/settings');
-    return handleResponse<SystemSettings>(res);
+    return handleResponse(res);
   },
 
   /**
    * PUT /api/settings
    * Saves updated limits and toggles.
    */
-  async updateSettings(updates: Partial<SystemSettings>): Promise<SystemSettings> {
+  async updateSettings(updates) {
     const res = await fetch('/api/settings', {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify(updates),
     });
-    return handleResponse<SystemSettings>(res);
+    return handleResponse(res);
   }
 };

@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { KeyRound, ShieldAlert, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { usersService } from '../services/api';
 
-export const LoginPage: React.FC = () => {
+export const LoginPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('admin@bettercoop.agri');
   const [password, setPassword] = useState('password123');
@@ -11,7 +11,7 @@ export const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const handleLoginSubmit = async (e: React.FormEvent) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMsg('');
@@ -32,7 +32,7 @@ export const LoginPage: React.FC = () => {
         navigate('/dashboard');
       }, 800);
       
-    } catch (err: any) {
+    } catch (err) {
       setIsLoading(false);
       setErrorMsg(err.message || 'Validation error. Please verify your credentials.');
     }

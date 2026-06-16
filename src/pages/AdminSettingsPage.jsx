@@ -4,11 +4,11 @@ import { FormCard } from '../components/shared/FormCard';
 import { InputField } from '../components/ui/InputField';
 import { Button } from '../components/ui/Button';
 import { settingsService } from '../services/api';
-import { SystemSettings } from '../types';
+
 import { Settings, Check, Bell, ToggleLeft, ToggleRight, Radio } from 'lucide-react';
 
-export const AdminSettingsPage: React.FC = () => {
-  const [settings, setSettings] = useState<SystemSettings | null>(null);
+export const AdminSettingsPage = () => {
+  const [settings, setSettings] = useState(null);
 
   // Form states mapping directly to Mongoose schemas
   const [cooperativeName, setCooperativeName] = useState('');
@@ -36,7 +36,7 @@ export const AdminSettingsPage: React.FC = () => {
     });
   }, []);
 
-  const handleSaveSettings = async (e: React.FormEvent) => {
+  const handleSaveSettings = async (e) => {
     e.preventDefault();
     setFeedback('');
 

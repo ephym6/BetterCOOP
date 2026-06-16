@@ -7,12 +7,11 @@ import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { InputField } from '../components/ui/InputField';
 import { usersService } from '../services/api';
-import { User } from '../types';
 import { UserPlus, ShieldAlert, KeyRound, Check, HelpCircle } from 'lucide-react';
 
-export const UserManagementPage: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+export const UserManagementPage = () => {
+  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [roleFilter, setRoleFilter] = useState('ALL');
 
@@ -51,7 +50,7 @@ export const UserManagementPage: React.FC = () => {
     setFilteredUsers(output);
   }, [users, searchText, roleFilter]);
 
-  const handleInviteSubmit = async (e: React.FormEvent) => {
+  const handleInviteSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
 
@@ -81,7 +80,7 @@ export const UserManagementPage: React.FC = () => {
   };
 
   // Helper to map role strings into beautiful badges
-  const renderRolePill = (roleStr: string) => {
+  const renderRolePill = (roleStr) => {
     switch (roleStr) {
       case 'SUPER_ADMIN':
         return <span className="px-2.5 py-1 bg-red-100 text-red-800 text-[10px] font-bold rounded-sm uppercase tracking-wider">Super Administrator</span>;
@@ -96,7 +95,7 @@ export const UserManagementPage: React.FC = () => {
   const columns = [
     {
       header: 'Manager Info',
-      render: (u: User) => (
+      render: (u) => (
         <div className="flex items-center gap-3">
           {u.avatarUrl ? (
             <img
@@ -118,15 +117,15 @@ export const UserManagementPage: React.FC = () => {
     },
     {
       header: 'Authority Role',
-      render: (u: User) => <div className="text-left">{renderRolePill(u.role)}</div>
+      render: (u) => <div className="text-left">{renderRolePill(u.role)}</div>
     },
     {
       header: 'System status',
-      render: (u: User) => <StatusBadge status={u.status} />
+      render: (u) => <StatusBadge status={u.status} />
     },
     {
       header: 'Operations',
-      render: (u: User) => (
+      render: (u) => (
         <button
           onClick={() => alert(`Reviewing permission structures for ${u.fullName}. Contact Security Lead to revoke active administrative tokens.`)}
           className="text-primary hover:underline text-xs font-bold font-label-md bg-transparent border-none outline-none cursor-pointer"
@@ -216,7 +215,7 @@ export const UserManagementPage: React.FC = () => {
             <label className="text-label-md font-bold text-on-surface-variant">System Authority Level</label>
             <select
               value={role}
-              onChange={(e) => setRole(e.target.value as any)}
+              onChange={(e) => setRole(e.target.value)}
               className="px-4 py-3 bg-surface-container-low border border-slate-border rounded-lg text-body-md text-on-surface outline-none cursor-pointer"
             >
               <option value="SENIOR_OFFICER">Senior Officer (Field registrations &amp; delivery logging)</option>

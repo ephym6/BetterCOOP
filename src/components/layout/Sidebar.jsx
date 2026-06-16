@@ -14,11 +14,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 
-interface SidebarProps {
-  onFutureModuleClick: (moduleName: string, phase: string) => void;
-}
-
-export const Sidebar: React.FC<SidebarProps> = ({ onFutureModuleClick }) => {
+export const Sidebar = ({ onFutureModuleClick }) => {
   const navigate = useNavigate();
 
   // Active styles for real active routes

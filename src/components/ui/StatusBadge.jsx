@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface StatusBadgeProps {
-  status: string;
-}
-
-export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
+export const StatusBadge = ({ status }) => {
   const cleanStatus = status.trim().toUpperCase();
 
   let styles = 'px-3 py-1 rounded-full text-label-xs font-bold uppercase tracking-wider inline-flex items-center justify-center';

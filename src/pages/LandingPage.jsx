@@ -4,7 +4,7 @@ import { motion } from 'motion/react';
 import { ArrowRight, Play, CheckCircle2, Shield, Globe, Heart, Mail } from 'lucide-react';
 import { Modal } from '../components/ui/Modal';
 
-export const LandingPage: React.FC = () => {
+export const LandingPage = () => {
   const navigate = useNavigate();
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 

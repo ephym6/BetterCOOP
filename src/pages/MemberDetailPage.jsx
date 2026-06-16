@@ -6,7 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { InputField } from '../components/ui/InputField';
 import { membersService, transactionsService } from '../services/api';
-import { Member, Transaction } from '../types';
+
 import { 
   ArrowLeft, 
   MapPin, 
@@ -22,12 +22,12 @@ import {
   History
 } from 'lucide-react';
 
-export const MemberDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+export const MemberDetailPage = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const [member, setMember] = useState<Member | null>(null);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [member, setMember] = useState(null);
+  const [transactions, setTransactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Edit member modal states
@@ -72,10 +72,10 @@ export const MemberDetailPage: React.FC = () => {
   }, [id]);
 
   // Handle status shift dropdown
-  const handleStatusShift = async (newStatus: string) => {
+  const handleStatusShift = async (newStatus) => {
     if (!member) return;
     try {
-      const updated = await membersService.updateMember(member._id, { status: newStatus as any });
+      const updated = await membersService.updateMember(member._id, { status: newStatus });
       setMember(updated);
     } catch (err) {
       alert('Failed to modify status.');
@@ -83,7 +83,7 @@ export const MemberDetailPage: React.FC = () => {
   };
 
   // Submit edit profile parameters
-  const handleUpdateProfileSubmit = async (e: React.FormEvent) => {
+  const handleUpdateProfileSubmit = async (e) => {
     e.preventDefault();
     if (!member) return;
 
@@ -104,7 +104,7 @@ export const MemberDetailPage: React.FC = () => {
   };
 
   // Submit new ledger line
-  const handleLedgerActionSubmit = async (e: React.FormEvent) => {
+  const handleLedgerActionSubmit = async (e) => {
     e.preventDefault();
     if (!member) return;
 
@@ -444,7 +444,7 @@ export const MemberDetailPage: React.FC = () => {
             <label className="text-label-md font-bold text-on-surface-variant">Cooperative Classification</label>
             <select
               value={editType}
-              onChange={(e) => setEditType(e.target.value as any)}
+              onChange={(e) => setEditType(e.target.value)}
               className="px-4 py-3 bg-surface-container-low border border-slate-border rounded-lg text-body-md text-on-surface outline-none cursor-pointer"
             >
               <option value="Smallholder">Smallholder (Under 5 Ha)</option>

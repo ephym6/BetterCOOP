@@ -3,22 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
 import { usersService } from '../../services/api';
-import { User } from '../../types';
 import { Modal } from '../ui/Modal';
 import { Info, AlertCircle } from 'lucide-react';
 
-interface DashboardLayoutProps {
-  pageTitle: string;
-  children: React.ReactNode;
-}
-
-export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
+export const DashboardLayout = ({
   pageTitle,
   children
 }) => {
   const navigate = useNavigate();
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [futureModuleInfo, setFutureModuleInfo] = useState<{ name: string; phase: string } | null>(null);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [futureModuleInfo, setFutureModuleInfo] = useState(null);
 
   useEffect(() => {
     // Sync with active session profile
@@ -37,7 +31,7 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
     navigate('/login');
   };
 
-  const triggerFutureModuleAlert = (moduleName: string, phase: string) => {
+  const triggerFutureModuleAlert = (moduleName, phase) => {
     setFutureModuleInfo({ name: moduleName, phase });
   };
 

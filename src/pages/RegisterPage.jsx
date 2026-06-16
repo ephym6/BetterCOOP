@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { usersService } from '../services/api';
 
-export const RegisterPage: React.FC = () => {
+export const RegisterPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
@@ -33,11 +33,11 @@ export const RegisterPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [acceptTerms, setTermsAccepted] = useState(false);
 
-  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
+  const [formErrors, setFormErrors] = useState({});
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const handleNextStep = () => {
-    const errors: Record<string, string> = {};
+    const errors = {};
     
     // Step validation rules
     if (step === 1) {
@@ -67,7 +67,7 @@ export const RegisterPage: React.FC = () => {
     setStep((prev) => Math.max(prev - 1, 1));
   };
 
-  const handleCompleteRegistration = async (e: React.FormEvent) => {
+  const handleCompleteRegistration = async (e) => {
     e.preventDefault();
     if (!acceptTerms) {
       alert('You must accept the BetterCOOP Data Privacy Policy to continue.');

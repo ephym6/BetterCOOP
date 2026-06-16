@@ -1,15 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Bell, HelpCircle, LogOut } from 'lucide-react';
-import { User } from '../../types';
-
-interface NavbarProps {
-  pageTitle: string;
-  user: User | null;
-  onLogout: () => void;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ pageTitle, user, onLogout }) => {
+export const Navbar = ({ pageTitle, user, onLogout }) => {
   const navigate = useNavigate();
 
   return (

@@ -1,32 +1,7 @@
 import React from 'react';
 import { Search, Filter } from 'lucide-react';
 
-interface FilterOption {
-  value: string;
-  label: string;
-}
-
-interface SearchFilterBarProps {
-  searchText: string;
-  onSearchChange: (text: string) => void;
-  searchPlaceholder?: string;
-  
-  // Optional Dropdown 1 (e.g. Crop Focus or Role)
-  filterValue1?: string;
-  onFilterChange1?: (val: string) => void;
-  filterLabel1?: string;
-  filterOptions1?: FilterOption[];
-
-  // Optional Dropdown 2 (e.g. Status)
-  filterValue2?: string;
-  onFilterChange2?: (val: string) => void;
-  filterLabel2?: string;
-  filterOptions2?: FilterOption[];
-
-  onAdvancedClick?: () => void;
-}
-
-export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
+export const SearchFilterBar = ({
   searchText,
   onSearchChange,
   searchPlaceholder = 'Search...',

@@ -8,13 +8,13 @@ import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { InputField } from '../components/ui/InputField';
 import { membersService } from '../services/api';
-import { Member } from '../types';
+
 import { Plus, UserPlus, FileEdit, ArrowRightLeft, Sprout } from 'lucide-react';
 
-export const MemberManagementPage: React.FC = () => {
+export const MemberManagementPage = () => {
   const navigate = useNavigate();
-  const [members, setMembers] = useState<Member[]>([]);
-  const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
+  const [members, setMembers] = useState([]);
+  const [filteredMembers, setFilteredMembers] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [cropFilter, setCropFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
@@ -79,7 +79,7 @@ export const MemberManagementPage: React.FC = () => {
   );
 
   // Form submit handler
-  const handleOnboardSubmit = async (e: React.FormEvent) => {
+  const handleOnboardSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
 
@@ -111,7 +111,7 @@ export const MemberManagementPage: React.FC = () => {
       
       setIsAddModalOpen(false);
       fetchMembers(); // reload table details
-    } catch (err: any) {
+    } catch (err) {
       setFormError(err.message || 'Error occurred onboarding member.');
     }
   };
@@ -138,7 +138,7 @@ export const MemberManagementPage: React.FC = () => {
   const columns = [
     {
       header: 'Farmer Directory Node',
-      render: (m: Member) => (
+      render: (m) => (
         <div className="flex items-center gap-3">
           {m.avatarUrl ? (
             <img
@@ -160,7 +160,7 @@ export const MemberManagementPage: React.FC = () => {
     },
     {
       header: 'Crop Focus & Farm size',
-      render: (m: Member) => (
+      render: (m) => (
         <div className="text-left font-body-sm flex items-center gap-2">
           <Sprout className="w-4 h-4 text-primary" />
           <div>
@@ -172,7 +172,7 @@ export const MemberManagementPage: React.FC = () => {
     },
     {
       header: 'Share Capital Savings',
-      render: (m: Member) => (
+      render: (m) => (
         <div className="text-left font-mono font-bold text-sm text-on-surface">
           Ksh {m.shareCapital.toLocaleString('en-US')}
         </div>
@@ -180,11 +180,11 @@ export const MemberManagementPage: React.FC = () => {
     },
     {
       header: 'Verification Status',
-      render: (m: Member) => <StatusBadge status={m.status} />
+      render: (m) => <StatusBadge status={m.status} />
     },
     {
       header: 'Actions',
-      render: (m: Member) => (
+      render: (m) => (
         <div className="flex gap-2">
           <Button
             onClick={() => navigate(`/members/${m._id}`)}
@@ -321,7 +321,7 @@ export const MemberManagementPage: React.FC = () => {
               <label className="text-label-md font-bold text-on-surface-variant">Classification</label>
               <select
                 value={farmType}
-                onChange={(e) => setFarmType(e.target.value as any)}
+                onChange={(e) => setFarmType(e.target.value)}
                 className="w-full px-4 py-3 bg-surface-container-low border border-slate-border rounded-lg text-body-md text-on-surface outline-none cursor-pointer"
               >
                 <option value="Smallholder">Smallholder (Under 5 Ha)</option>

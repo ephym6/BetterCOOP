@@ -13,7 +13,7 @@ import { ProfileSettingsPage } from './pages/ProfileSettingsPage';
 import { AdminSettingsPage } from './pages/AdminSettingsPage';
 
 // Simple Route Guard to protect admin console pages
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const ProtectedRoute = ({ children }) => {
   const currentSessionUser = localStorage.getItem('bettercoop_current_user');
   
   if (!currentSessionUser) {

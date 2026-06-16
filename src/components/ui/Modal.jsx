@@ -2,14 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X } from 'lucide-react';
 
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  title: string;
-  children: React.ReactNode;
-}
-
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
+export const Modal = ({ isOpen, onClose, title, children }) => {
   return (
     <AnimatePresence>
       {isOpen && (

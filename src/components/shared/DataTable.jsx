@@ -1,25 +1,7 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-interface Column<T> {
-  header: string;
-  render: (item: T, index: number) => React.ReactNode;
-  align?: 'left' | 'center' | 'right';
-  className?: string;
-}
-
-interface DataTableProps<T> {
-  data: T[];
-  columns: Column<T>[];
-  keyExtractor: (item: T, index: number) => string;
-  currentPage?: number;
-  totalPages?: number;
-  onPageChange?: (page: number) => void;
-  emptyMessage?: string;
-  totalRecordsLabel?: string;
-}
-
-export function DataTable<T>({
+export function DataTable({
   data,
   columns,
   keyExtractor,
@@ -28,7 +10,7 @@ export function DataTable<T>({
   onPageChange,
   emptyMessage = 'No records found matching your selection.',
   totalRecordsLabel
-}: DataTableProps<T>) {
+}) {
   return (
     <div className="bg-surface-container-lowest rounded-xl shadow-md border border-slate-border overflow-hidden">
       <div className="overflow-x-auto">
