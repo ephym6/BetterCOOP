@@ -1,63 +1,48 @@
 /**
- * BetterCOOP - Client-Side Service Layer (Increment 1 Core System)
+ * BetterCOOP - Full-Stack Client-Side Service Layer (Increment 1 & 2 Core System)
  * 
- * DESIGNED FOR FUTURE REST API INTEGRATION:
- * The functions below simulate asynchronous database access by returning Promises.
- * 
- * FUTURE SERVER ARCHITECTURE:
- * - Express Server: Express.js (v4/v5) mounting routes under `/api/*`
- * - Database: MongoDB with Mongoose Schema mapper
- * 
- * Commented guides accompany each function to show the corresponding backend routes.
+ * This service layer communicates directly with the real Node.js + Express backend
+ * and mounts API queries under `/api/*`. It persists data securely in the backend
+ * file-based database for durable session persistence.
  */
 
 import { Member, User, Transaction, SystemSettings } from '../types';
-import { INITIAL_MEMBERS, INITIAL_USERS, INITIAL_TRANSACTIONS, INITIAL_SETTINGS } from '../data/mockData';
 
-// Helper to initialize localStorage with mock data if not already present
-function initDb() {
-  if (!localStorage.getItem('bettercoop_members')) {
-    localStorage.setItem('bettercoop_members', JSON.stringify(INITIAL_MEMBERS));
+// Helper for standard JSON headers
+const getHeaders = () => ({
+  'Content-Type': 'application/json',
+});
+
+// Helper response handler
+async function handleResponse<T>(response: Response): Promise<T> {
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(errText || `API error: ${response.status}`);
   }
-  if (!localStorage.getItem('bettercoop_users')) {
-    localStorage.setItem('bettercoop_users', JSON.stringify(INITIAL_USERS));
-  }
-  if (!localStorage.getItem('bettercoop_transactions')) {
-    localStorage.setItem('bettercoop_transactions', JSON.stringify(INITIAL_TRANSACTIONS));
-  }
-  if (!localStorage.getItem('bettercoop_settings')) {
-    localStorage.setItem('bettercoop_settings', JSON.stringify(INITIAL_SETTINGS));
-  }
-  if (!localStorage.getItem('bettercoop_current_user')) {
-    // Default logged in user for prototype
-    localStorage.setItem('bettercoop_current_user', JSON.stringify(INITIAL_USERS[0]));
-  }
+  return response.json() as Promise<T>;
 }
-
-// Ingest baseline data
-initDb();
-
-const delay = (ms = 400) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const membersService = {
   /**
    * GET /api/members
-   * Returns list of cooperative members. Supports basic query filtering.
+   * Returns list of cooperative members.
    */
   async getMembers(): Promise<Member[]> {
-    await delay();
-    const data = localStorage.getItem('bettercoop_members');
-    return data ? JSON.parse(data) : [];
+    const res = await fetch('/api/members');
+    return handleResponse<Member[]>(res);
   },
 
   /**
    * GET /api/members/:id
-   * Returns a specific member of the agricultural syndicate.
+   * Returns a specific member.
    */
   async getMemberById(id: string): Promise<Member | null> {
-    await delay();
-    const list = await this.getMembers();
-    return list.find((m) => m._id === id || m.memberId === id) || null;
+    try {
+      const res = await fetch(`/api/members/${id}`);
+      return await handleResponse<Member>(res);
+    } catch {
+      return null;
+    }
   },
 
   /**
@@ -65,36 +50,12 @@ export const membersService = {
    * Onboards a brand new agricultural member and generates a unique ID.
    */
   async createMember(memberData: Omit<Member, '_id' | 'memberId' | 'joinedDate'>): Promise<Member> {
-    await delay(600);
-    const list = await this.getMembers();
-    
-    const randomSuffix = Math.floor(100 + Math.random() * 900);
-    const mockId = `mem_${Date.now()}`;
-    const newMemberId = `#BC-2026-${randomSuffix}`;
-
-    const newMember: Member = {
-      ...memberData,
-      _id: mockId,
-      memberId: newMemberId,
-      joinedDate: `Joined Jun 2026`
-    };
-
-    list.unshift(newMember);
-    localStorage.setItem('bettercoop_members', JSON.stringify(list));
-    
-    // Auto-generate an initial transaction log
-    if (newMember.shareCapital > 0) {
-      await transactionsService.createTransaction({
-        memberId: newMemberId,
-        memberName: newMember.fullName,
-        type: 'Initial Deposit',
-        amount: newMember.shareCapital,
-        status: 'COMPLETED',
-        reference: 'Initial Share Capital onboarding'
-      });
-    }
-
-    return newMember;
+    const res = await fetch('/api/members', {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(memberData),
+    });
+    return handleResponse<Member>(res);
   },
 
   /**
@@ -102,15 +63,12 @@ export const membersService = {
    * Updates coordinates or operational crop types for an existing farmer.
    */
   async updateMember(id: string, updates: Partial<Member>): Promise<Member> {
-    await delay();
-    const list = await this.getMembers();
-    const index = list.findIndex((m) => m._id === id);
-    if (index === -1) throw new Error('Member not found');
-
-    const updated = { ...list[index], ...updates };
-    list[index] = updated;
-    localStorage.setItem('bettercoop_members', JSON.stringify(list));
-    return updated;
+    const res = await fetch(`/api/members/${id}`, {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(updates),
+    });
+    return handleResponse<Member>(res);
   }
 };
 
@@ -120,9 +78,8 @@ export const usersService = {
    * Returns system users/administrators.
    */
   async getUsers(): Promise<User[]> {
-    await delay();
-    const data = localStorage.getItem('bettercoop_users');
-    return data ? JSON.parse(data) : [];
+    const res = await fetch('/api/users');
+    return handleResponse<User[]>(res);
   },
 
   /**
@@ -130,15 +87,12 @@ export const usersService = {
    * Invites or registers a system administrator/staff member.
    */
   async createUser(userData: Omit<User, '_id'>): Promise<User> {
-    await delay();
-    const list = await this.getUsers();
-    const newUser: User = {
-      ...userData,
-      _id: `usr_${Date.now()}`
-    };
-    list.push(newUser);
-    localStorage.setItem('bettercoop_users', JSON.stringify(list));
-    return newUser;
+    const res = await fetch('/api/users', {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(userData),
+    });
+    return handleResponse<User>(res);
   },
 
   /**
@@ -146,6 +100,21 @@ export const usersService = {
    * Fetches active session user profile.
    */
   async getCurrentUser(): Promise<User | null> {
+    try {
+      // First try to load backend active session
+      const res = await fetch('/api/users/me');
+      if (res.ok) {
+        const u = await res.json();
+        if (u) {
+          localStorage.setItem('bettercoop_current_user', JSON.stringify(u));
+          return u;
+        }
+      }
+    } catch (e) {
+      console.warn("Backend session fetch failed, falling back to local storage", e);
+    }
+    
+    // Fallback to local storage if backend is transient
     const data = localStorage.getItem('bettercoop_current_user');
     return data ? JSON.parse(data) : null;
   },
@@ -155,51 +124,53 @@ export const usersService = {
    * Allows the administrator to update their email and display avatar.
    */
   async updateCurrentUser(updates: Partial<User>): Promise<User> {
-    await delay(300);
-    const current = await this.getCurrentUser();
-    if (!current) throw new Error('No active session user');
-    
-    const updated = { ...current, ...updates };
+    const res = await fetch('/api/users/me', {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(updates),
+    });
+    const updated = await handleResponse<User>(res);
     localStorage.setItem('bettercoop_current_user', JSON.stringify(updated));
-
-    // Keep users directory in sync
-    const list = await this.getUsers();
-    const idx = list.findIndex((u) => u._id === current._id);
-    if (idx !== -1) {
-      list[idx] = { ...list[idx], ...updates };
-      localStorage.setItem('bettercoop_users', JSON.stringify(list));
-    }
-
     return updated;
+  },
+
+  /**
+   * POST /api/users/login
+   * Authenticates/sets active session user in the backend.
+   */
+  async loginUser(email: string): Promise<User> {
+    const res = await fetch('/api/users/login', {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify({ email }),
+    });
+    const user = await handleResponse<User>(res);
+    localStorage.setItem('bettercoop_current_user', JSON.stringify(user));
+    return user;
   }
 };
 
 export const transactionsService = {
   /**
    * GET /api/transactions
-   * Retrieves full transaction logs (deliveries, repayments, deposits).
+   * Retrieves full transaction logs.
    */
   async getTransactions(): Promise<Transaction[]> {
-    await delay(200);
-    const data = localStorage.getItem('bettercoop_transactions');
-    return data ? JSON.parse(data) : [];
+    const res = await fetch('/api/transactions');
+    return handleResponse<Transaction[]>(res);
   },
 
   /**
    * POST /api/transactions
-   * Logs a new financial record.
+   * Logs a new financial or delivery record.
    */
   async createTransaction(txData: Omit<Transaction, '_id' | 'date'>): Promise<Transaction> {
-    await delay(300);
-    const list = await this.getTransactions();
-    const newTx: Transaction = {
-      ...txData,
-      _id: `tx_${Date.now()}`,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    };
-    list.unshift(newTx);
-    localStorage.setItem('bettercoop_transactions', JSON.stringify(list));
-    return newTx;
+    const res = await fetch('/api/transactions', {
+      method: 'POST',
+      headers: getHeaders(),
+      body: JSON.stringify(txData),
+    });
+    return handleResponse<Transaction>(res);
   }
 };
 
@@ -209,9 +180,8 @@ export const settingsService = {
    * Returns global system preferences, minimum share rules, and interest rates.
    */
   async getSettings(): Promise<SystemSettings> {
-    await delay();
-    const data = localStorage.getItem('bettercoop_settings');
-    return data ? JSON.parse(data) : INITIAL_SETTINGS;
+    const res = await fetch('/api/settings');
+    return handleResponse<SystemSettings>(res);
   },
 
   /**
@@ -219,10 +189,11 @@ export const settingsService = {
    * Saves updated limits and toggles.
    */
   async updateSettings(updates: Partial<SystemSettings>): Promise<SystemSettings> {
-    await delay(500);
-    const current = await this.getSettings();
-    const updated = { ...current, ...updates };
-    localStorage.setItem('bettercoop_settings', JSON.stringify(updated));
-    return updated;
+    const res = await fetch('/api/settings', {
+      method: 'PUT',
+      headers: getHeaders(),
+      body: JSON.stringify(updates),
+    });
+    return handleResponse<SystemSettings>(res);
   }
 };

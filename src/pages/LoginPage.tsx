@@ -26,7 +26,7 @@ export const LoginPage: React.FC = () => {
       }
 
       // Successful simulated database check - persist active session
-      localStorage.setItem('bettercoop_current_user', JSON.stringify(foundUser));
+      await usersService.loginUser(foundUser.email);
       setTimeout(() => {
         setIsLoading(false);
         navigate('/dashboard');
