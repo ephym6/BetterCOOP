@@ -1,0 +1,6 @@
+{
+  "name": "BetterCOOP",
+  "description": "Agri-Fintech management platform for cooperatives to digitize members, registration, credentials and administration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
