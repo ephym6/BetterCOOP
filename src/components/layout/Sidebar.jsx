@@ -69,16 +69,7 @@ export const Sidebar = ({ onFutureModuleClick }) => {
         </nav>
       </div>
 
-      {/* Admin User Footer Coordinate */}
-      <div className="mt-auto p-4 bg-emerald-950 border-t border-emerald-800">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-amber-500 flex items-center justify-center font-bold text-emerald-900 border-2 border-white/20">EM</div>
-          <div className="overflow-hidden">
-            <p className="text-sm font-semibold truncate text-white">Ephraim M.</p>
-            <p className="text-xs text-emerald-400">System Admin</p>
-          </div>
-        </div>
-      </div>
+      {/* Admin footer removed */}
     </aside>
   );
 };
