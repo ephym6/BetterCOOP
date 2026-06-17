@@ -6,11 +6,13 @@ import { LoginPage } from './pages/LoginPage';
 import { ClerkDashboard } from './pages/ClerkDashboard';
 import { MemberDashboard } from './pages/MemberDashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { Navbar } from './components/Navbar';
 
 export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
