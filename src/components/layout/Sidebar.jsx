@@ -54,76 +54,7 @@ export const Sidebar = ({ onFutureModuleClick }) => {
             <span>Users</span>
           </NavLink>
 
-          {/* Placeholders for Future Modules (Increment 2 - Ledger Module) */}
-          <div className="text-xs font-semibold text-emerald-500 uppercase tracking-wider mb-2 px-2 mt-4">Modules (Coming Soon)</div>
-
-          <button
-            onClick={() => onFutureModuleClick('Savings Management', 'Increment 2 (Ledger Module)')}
-            className="flex items-center justify-between w-full text-left font-normal select-none relative group transition-colors duration-150 px-3 py-2 text-emerald-100/70 hover:bg-emerald-800/50 rounded-md text-sm cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <Wallet className="w-5 h-5 text-emerald-400/70" />
-              <span>Savings</span>
-            </div>
-            <span className="text-[9px] font-bold uppercase tracking-wider bg-white/10 px-1.5 py-0.5 rounded text-white group-hover:bg-amber-500 group-hover:text-emerald-950">
-              Inc 2
-            </span>
-          </button>
-
-          <button
-            onClick={() => onFutureModuleClick('Loans Management', 'Increment 2 (Ledger Module)')}
-            className="flex items-center justify-between w-full text-left font-normal select-none relative group transition-colors duration-150 px-3 py-2 text-emerald-100/70 hover:bg-emerald-800/50 rounded-md text-sm cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <Coins className="w-5 h-5 text-emerald-400/70" />
-              <span>Loans</span>
-            </div>
-            <span className="text-[9px] font-bold uppercase tracking-wider bg-white/10 px-1.5 py-0.5 rounded text-white group-hover:bg-amber-500 group-hover:text-emerald-950">
-              Inc 2
-            </span>
-          </button>
-
-          <button
-            onClick={() => onFutureModuleClick('General Ledger', 'Increment 2 (Ledger Module)')}
-            className="flex items-center justify-between w-full text-left font-normal select-none relative group transition-colors duration-150 px-3 py-2 text-emerald-100/70 hover:bg-emerald-800/50 rounded-md text-sm cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <BookOpen className="w-5 h-5 text-emerald-400/70" />
-              <span>Ledger</span>
-            </div>
-            <span className="text-[9px] font-bold uppercase tracking-wider bg-white/10 px-1.5 py-0.5 rounded text-white group-hover:bg-amber-500 group-hover:text-emerald-950">
-              Inc 2
-            </span>
-          </button>
-
-          <button
-            onClick={() => onFutureModuleClick('Reporting Centre', 'Increment 2 (Ledger Module)')}
-            className="flex items-center justify-between w-full text-left font-normal select-none relative group transition-colors duration-150 px-3 py-2 text-emerald-100/70 hover:bg-emerald-800/50 rounded-md text-sm cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <PieChart className="w-5 h-5 text-emerald-400/70" />
-              <span>Reports</span>
-            </div>
-            <span className="text-[9px] font-bold uppercase tracking-wider bg-white/10 px-1.5 py-0.5 rounded text-white group-hover:bg-amber-500 group-hover:text-emerald-950">
-              Inc 2
-            </span>
-          </button>
-
-          {/* Placeholders for Future Modules (Increment 3 - SMS Engine) */}
-          <button
-            onClick={() => onFutureModuleClick('SMS Broadcast Gateway', 'Increment 3 (SMS Engine)')}
-            className="flex items-center justify-between w-full text-left font-normal select-none relative group transition-colors duration-150 px-3 py-2 text-emerald-100/70 hover:bg-emerald-800/50 rounded-md text-sm cursor-pointer"
-          >
-            <div className="flex items-center gap-3">
-              <MessageSquare className="w-5 h-5 text-emerald-400/70" />
-              <span>SMS Hub</span>
-            </div>
-            <span className="text-[9px] font-bold uppercase tracking-wider bg-white/10 px-1.5 py-0.5 rounded text-white group-hover:bg-amber-500 group-hover:text-emerald-950">
-              Inc 3
-            </span>
-          </button>
-
-          <div className="h-px bg-white/10 my-2 mx-4" />
+          {/* Future module placeholders removed */}
 
           {/* Settings and Profile links */}
           <NavLink to="/profile" className={({ isActive }) => (isActive ? activeClass : inactiveClass)}>

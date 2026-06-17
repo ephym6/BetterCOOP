@@ -190,6 +190,15 @@
       "status": "ACTIVE",
       "phoneNumber": "+254 799 333 444",
       "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuA9xidyFynYQyfvxno26m3msfVpI7Uabhhislals9djtk-PSVzigZbkAQsPvt1haKxvB1Y-S0HdpI8lY2i81VbIXJPkX_SebVOSiIGu1ZaJ7n5tFYBdCx-GucscmW2dANfO3f2WvaO1Xcnr3yK_PXoT0Ga-NFZ1KMMspogjQAdUCqELW39v_Fzkq51gGmE3BIFKFQveAysjnvMpnXG5aKuAl0Y-A4cCdgRg8Q3y6CobxOFkUiOUxI5JEQvqHTX8TOrCaloudfX181o"
+    },
+    {
+      "email": "denley@bettercoop.agri",
+      "fullName": "Denley Kipkoech",
+      "role": "COOP_ADMIN",
+      "status": "ACTIVE",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120&h=120",
+      "_id": "usr_1781678560085",
+      "phoneNumber": ""
     }
   ],
   "transactions": [
@@ -275,11 +284,12 @@
     "enableTwoFactorAuth": true
   },
   "currentUser": {
-    "_id": "usr_1",
-    "email": "admin@bettercoop.agri",
-    "fullName": "Admin User",
-    "role": "SUPER_ADMIN",
+    "email": "denley@bettercoop.agri",
+    "fullName": "Denley Kipkoech",
+    "role": "COOP_ADMIN",
     "status": "ACTIVE",
-    "avatarUrl": "https://lh3.googleusercontent.com/aida-public/AB6AXuCSDCgHgbvEqwyKRX_GQ4SmKJanH_ltHZndj95PmLgPnzpBeWDecA-QayX-06MVxTrDmzU_wVnzFd_nqdLLoqHy65imHcEGqOad8VHRTeL3LnR3z7NRB4PL3DQI1PyVNYTMHBugU-s1tyhghPa6AuBRBkl3NKD3vrIRuRWN6M6HMJNq9RXpBPYAbOkVR_vTDI4oV1yU35In_ZrDWIjX3YhfjwVflMo2ApteSTsUlFFNrAGFqJOSdkWFNqTPtUqFeJ9O9dZ_4jEhiCw"
+    "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120&h=120",
+    "_id": "usr_1781678560085",
+    "phoneNumber": ""
   }
 }
