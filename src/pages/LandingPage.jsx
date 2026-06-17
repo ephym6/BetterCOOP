@@ -9,12 +9,20 @@ export const LandingPage = () => {
         <p className="text-gray-600 mb-8">
           Welcome to the Cooperative Management System demo. This is a simplified version of our application to demonstrate core flows.
         </p>
-        <Link
-          to="/login"
-          className="inline-block w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-        >
-          Proceed to Login
-        </Link>
+        <div className="space-y-3">
+          <Link
+            to="/login"
+            className="inline-block w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+          >
+            Proceed to Login
+          </Link>
+          <Link
+            to="/register"
+            className="inline-block w-full py-3 px-4 bg-white hover:bg-gray-50 text-blue-600 border border-blue-600 font-medium rounded-lg transition-colors"
+          >
+            Create an Account
+          </Link>
+        </div>
       </div>
     </div>
   );

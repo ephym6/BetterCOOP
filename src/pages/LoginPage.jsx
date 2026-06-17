@@ -1,28 +1,39 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
     setError('');
 
-    if (username === 'clerk' && password === 'password123') {
-      login(username, 'clerk');
-      navigate('/clerk-dashboard');
-    } else if (username === 'member' && password === 'password123') {
-      login(username, 'member');
-      navigate('/member-dashboard');
+    const success = login(username, password);
+    
+    if (success) {
+      // The state won't update synchronously for this render cycle, but we can rely on 
+      // the local storage or just navigate directly since we know the credentials were correct.
+      // We need to fetch the newly logged-in user from the db or just let the redirect handle it.
+      // Wait, we can't easily access the new role synchronously without it being returned.
+      // Let's adjust `login` to return the user object instead of true/false.
+      // Actually, since I'm rewriting this, let's just do a quick parse or wait for context.
+      // I'll update AuthContext.jsx to return the user from `login`.
     } else {
       setError('Invalid username or password');
     }
   };
+
+  // If user becomes logged in, redirect them.
+  React.useEffect(() => {
+    if (user) {
+      navigate(`/${user.role}-dashboard`);
+    }
+  }, [user, navigate]);
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-4">
@@ -45,7 +56,7 @@ export const LoginPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-              placeholder="Enter demo username"
+              placeholder="Enter username"
               required
             />
           </div>
@@ -59,7 +70,7 @@ export const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
-              placeholder="Enter demo password"
+              placeholder="Enter password"
               required
             />
           </div>
@@ -71,6 +82,10 @@ export const LoginPage = () => {
             Login
           </button>
         </form>
+
+        <div className="mt-6 text-center text-sm text-gray-600">
+          Don't have an account? <Link to="/register" className="text-blue-600 hover:text-blue-700 font-medium">Register here</Link>
+        </div>
 
         <div className="mt-8 pt-6 border-t border-gray-100 text-sm text-gray-500">
           <p className="font-semibold mb-2">Demo Credentials:</p>
