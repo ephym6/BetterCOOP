@@ -19,7 +19,7 @@ export const UserManagementPage = () => {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState<'SUPER_ADMIN' | 'COOP_ADMIN' | 'SENIOR_OFFICER'>('SENIOR_OFFICER');
+  const [role, setRole] = useState('SENIOR_OFFICER');
   const [formError, setFormError] = useState('');
 
   const fetchUsers = async () => {

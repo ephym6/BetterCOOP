@@ -4,7 +4,7 @@ import fs from "fs";
 import { createServer as createViteServer } from "vite";
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 // Path to file-based persistent JSON database
 const DB_PATH = path.join(process.cwd(), "server", "database", "db.json");
