@@ -26,7 +26,7 @@ export const MemberManagementPage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [cropType, setCropType] = useState('Rice');
   const [farmSize, setFarmSize] = useState('2.5');
-  const [farmType, setFarmType] = useState<'Smallholder' | 'Commercial'>('Smallholder');
+  const [farmType, setFarmType] = useState('Smallholder');
   const [shareCapital, setShareCapital] = useState('5000');
   const [formError, setFormError] = useState('');
 

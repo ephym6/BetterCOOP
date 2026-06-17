@@ -36,11 +36,11 @@ export const MemberDetailPage = () => {
   const [editPhone, setEditPhone] = useState('');
   const [editCrop, setEditCrop] = useState('');
   const [editSize, setEditSize] = useState('');
-  const [editType, setEditType] = useState<'Smallholder' | 'Commercial'>('Smallholder');
+  const [editType, setEditType] = useState('Smallholder');
 
   // Ledger Action Modal states
   const [isTxModalOpen, setIsTxModalOpen] = useState(false);
-  const [txAction, setTxAction] = useState<'SAVINGS' | 'DELIVERY'>('SAVINGS');
+  const [txAction, setTxAction] = useState('SAVINGS');
   const [txAmount, setTxAmount] = useState('2000');
   const [txWeight, setTxWeight] = useState('150');
   const [txReference, setTxReference] = useState('Direct Mobilization contribution');

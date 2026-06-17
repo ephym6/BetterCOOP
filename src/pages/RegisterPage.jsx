@@ -28,7 +28,7 @@ export const RegisterPage = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [cropType, setCropType] = useState('');
   const [farmSize, setFarmSize] = useState('');
-  const [farmType, setFarmType] = useState<'Smallholder' | 'Commercial'>('Smallholder');
+  const [farmType, setFarmType] = useState('Smallholder');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [acceptTerms, setTermsAccepted] = useState(false);
