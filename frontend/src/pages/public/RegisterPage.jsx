@@ -74,17 +74,22 @@ export const RegisterPage = () => {
       return;
     }
 
-    // Create a mock session administrator profile corresponding to this input
-    const newUser = await usersService.createUser({
-      email: email || 'admin@bettercoop.agri',
-      fullName: fullName,
-      role: 'COOP_ADMIN', // Newly self-onboarded managers become Coop Administrators
-      status: 'ACTIVE',
-      avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8IFvNdwUGbDubGYZvceYNTfcTYraCl4XWd2vM2MuM24yGSgLzvOxxHGoI_AQOGzskgktsODmTfr9b4k4th_VRJxA-6PLznzztQTwRIWPQVNwzgIlz6wPYDOncaGo3uecq--Zb1Rs0L804cqUtckzUeTcT8NGKHK41bEunx4WoqmYxzxE6i5SyhmwFAY-BTJ6S-XgRs1r8GFIFNh33dV0a3hMc38-2vp_SIvtgGqR2HSWsEzjoZ46UQPjWhGYCKf91uDteuS16fCE'
-    });
+    try {
+      const newUser = await usersService.createUser({
+        email: email || 'admin@bettercoop.agri',
+        name: fullName,
+        password: password || 'password123',
+        role: 'admin',
+        status: 'ACTIVE',
+        avatarUrl: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8IFvNdwUGbDubGYZvceYNTfcTYraCl4XWd2vM2MuM24yGSgLzvOxxHGoI_AQOGzskgktsODmTfr9b4k4th_VRJxA-6PLznzztQTwRIWPQVNwzgIlz6wPYDOncaGo3uecq--Zb1Rs0L804cqUtckzUeTcT8NGKHK41bEunx4WoqmYxzxE6i5SyhmwFAY-BTJ6S-XgRs1r8GFIFNh33dV0a3hMc38-2vp_SIvtgGqR2HSWsEzjoZ46UQPjWhGYCKf91uDteuS16fCE'
+      });
 
-    localStorage.setItem('bettercoop_current_user', JSON.stringify(newUser));
-    setIsSuccessModalOpen(true);
+      localStorage.setItem('bettercoop_current_user', JSON.stringify(newUser));
+      setIsSuccessModalOpen(true);
+    } catch (err) {
+      console.error(err);
+      alert('Registration failed: ' + err.message);
+    }
   };
 
   return (
