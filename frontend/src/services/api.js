@@ -7,9 +7,13 @@
  */
 
 // Helper for standard JSON headers
-const getHeaders = () => ({
-  'Content-Type': 'application/json',
-});
+const getHeaders = () => {
+  const token = localStorage.getItem('token');
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  };
+};
 
 // Helper response handler
 async function handleResponse(response) {
@@ -17,7 +21,11 @@ async function handleResponse(response) {
     const errText = await response.text();
     throw new Error(errText || `API error: ${response.status}`);
   }
-  return response.json();
+  const data = await response.json();
+  if (data && typeof data === 'object' && 'success' in data && 'data' in data) {
+    return data.data;
+  }
+  return data;
 }
 
 export const membersService = {
@@ -26,7 +34,7 @@ export const membersService = {
    * Returns list of cooperative members.
    */
   async getMembers() {
-    const res = await fetch('/api/members');
+    const res = await fetch('/api/members', { headers: getHeaders() });
     return handleResponse(res);
   },
 
@@ -36,7 +44,7 @@ export const membersService = {
    */
   async getMemberById(id) {
     try {
-      const res = await fetch(`/api/members/${id}`);
+      const res = await fetch(`/api/members/${id}`, { headers: getHeaders() });
       return await handleResponse(res);
     } catch {
       return null;
@@ -76,7 +84,7 @@ export const usersService = {
    * Returns system users/administrators.
    */
   async getUsers() {
-    const res = await fetch('/api/users');
+    const res = await fetch('/api/users', { headers: getHeaders() });
     return handleResponse(res);
   },
 
@@ -85,7 +93,7 @@ export const usersService = {
    * Invites or registers a system administrator/staff member.
    */
   async createUser(userData) {
-    const res = await fetch('/api/users', {
+    const res = await fetch('/api/auth/register', {
       method: 'POST',
       headers: getHeaders(),
       body: JSON.stringify(userData),
@@ -100,9 +108,9 @@ export const usersService = {
   async getCurrentUser() {
     try {
       // First try to load backend active session
-      const res = await fetch('/api/users/me');
+      const res = await fetch('/api/auth/me', { headers: getHeaders() });
       if (res.ok) {
-        const u = await res.json();
+        const u = await handleResponse(res);
         if (u) {
           localStorage.setItem('bettercoop_current_user', JSON.stringify(u));
           return u;
@@ -122,7 +130,7 @@ export const usersService = {
    * Allows the administrator to update their email and display avatar.
    */
   async updateCurrentUser(updates) {
-    const res = await fetch('/api/users/me', {
+    const res = await fetch('/api/auth/me', {
       method: 'PUT',
       headers: getHeaders(),
       body: JSON.stringify(updates),
@@ -137,12 +145,19 @@ export const usersService = {
    * Authenticates/sets active session user in the backend.
    */
   async loginUser(email) {
-    const res = await fetch('/api/users/login', {
+    const res = await fetch('/api/auth/login', {
       method: 'POST',
       headers: getHeaders(),
-      body: JSON.stringify({ email }),
+      // MOCK password as frontend only used email originally
+      body: JSON.stringify({ email, password: 'password123' }),
     });
-    const user = await handleResponse(res);
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.message || 'API error');
+    
+    if (result.token) {
+      localStorage.setItem('token', result.token);
+    }
+    const user = result.data || result;
     localStorage.setItem('bettercoop_current_user', JSON.stringify(user));
     return user;
   }
@@ -154,7 +169,7 @@ export const transactionsService = {
    * Retrieves full transaction logs.
    */
   async getTransactions() {
-    const res = await fetch('/api/transactions');
+    const res = await fetch('/api/transactions', { headers: getHeaders() });
     return handleResponse(res);
   },
 
@@ -178,7 +193,7 @@ export const settingsService = {
    * Returns global system preferences, minimum share rules, and interest rates.
    */
   async getSettings() {
-    const res = await fetch('/api/settings');
+    const res = await fetch('/api/settings', { headers: getHeaders() });
     return handleResponse(res);
   },
 
